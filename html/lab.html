@@ -1,0 +1,355 @@
+<html>
+<head><title>The Linux Audio Backstop</title></head>
+<body bgcolor="#FFFFFF">
+<table width="760" border="0" cellspacing="0" cellpadding="0">
+
+<tr><td align="center" colspan="3"><big><big><strong>The Linux Audio Backstop</strong>
+</big></big></td></tr>
+
+<tr><td align="center" valign="top" colspan="3"><big><strong>Webcatcher Interface</strong></big>
+</td></tr>
+
+<tr><td width="760"colspan="3">&nbsp;</td></tr>
+
+<tr valign="top"><td align="right"><strong><a name="deck">DECK </a></strong></td>
+<td width="20">&nbsp;</td>
+<td align="left">The <em>deck</em> parameter controls which audio device 
+(soundcard) is used for the event.  Anywhere from one to four such devices 
+(numbered from '0' to '3') may be present on your system.  The listbox will 
+allow you to choose only values that are appropriate for your system. </td> 
+</tr>
+
+<tr><td width="760"colspan="3">&nbsp;</td></tr>
+<tr><td width="760"colspan="3">&nbsp;</td></tr>
+
+<tr valign="top"><td align="right"><strong><a name="filename">FILENAME </a></strong></td>
+<td width="20">&nbsp;</td>
+<td align="left">
+The <em>filename</em> parameter determines the name of the audio file to be
+used for a Record or Playback event.  You should include the file
+extension (e.g. '.wav') as part of the name.  These files go in the 
+directory that is configured as the <em>AudioRoot</em> directory 
+(typically '/usr/snd').  
+<a href="lab.html#macros" arget="docs">Configuration macros</a> can be 
+used in this field.  This value is ignored for all other type events.
+</td></tr>
+
+<tr><td width="760"colspan="3">&nbsp;</td></tr>
+<tr><td width="760"colspan="3">&nbsp;</td></tr>
+
+<tr valign="top"><td align="right"><strong><a name="length">LENGTH </a></strong></td>
+<td width="20">&nbsp;</td>
+<td align="left">
+The <em>length</em> parameter determines how long a file will be recorded, in
+the format <strong>MM:SS</strong>, where <strong>MM</strong> is minutes and 
+<strong>SS</strong> is seconds.  This value is ignored for all other
+type events.
+</td></tr>
+
+<tr><td width="760"colspan="3">&nbsp;</td></tr>
+<tr><td width="760"colspan="3">&nbsp;</td></tr>
+
+<tr valign="top"><td align="right"><strong><a name="source">SOURCE </a></strong></td>
+<td width="20">&nbsp;</td>
+<td align="left">
+The <em>source</em> parameter determines which audio source (satellite feed,
+switcher channel or whatever) will be used for a record event, or what
+channel to switch to for a playback event.  This value is ignored for
+all other type events.  
+<p>
+The values available in this field will vary depending upon the local
+installation.  See your engineer for details!
+</td></tr>
+
+<tr><td width="760"colspan="3">&nbsp;</td></tr>
+<tr><td width="760"colspan="3">&nbsp;</td></tr>
+
+
+<tr valign="top"><td align="right"><strong><a name="type">EVENT TYPE </a></strong></td>
+<td width="20">&nbsp;</td>
+<td align="left">
+The <em>event type</em> parameter determines what type of event will be 
+scheduled.  At present, there are four choices available to you:  <strong>
+Timed Record</strong>, <strong>Timed Playback</strong>, <strong>Timed
+Switch</strong> and <strong>Pulse Relay</strong>.  All of these
+events are scheduled on the basis of the time of day, and are
+otherwise pretty obvious as to what they do.
+</td></tr>
+
+<tr><td width="760"colspan="3">&nbsp;</td></tr>
+<tr><td width="760"colspan="3">&nbsp;</td></tr>
+
+<tr valign="top"><td align="right"><strong><a name="pin">PIN </a></strong></td>
+<td width="20">&nbsp;</td>
+<td align="left">
+The <em>pin</em> parameter controls which output relay on the GPIO board is 
+associated with this event.  Currently, this has meaning only to a
+<strong>Pulse Relay</strong> event, and is ignored by all other event types.
+</td></tr>
+
+<tr><td width="760"colspan="3">&nbsp;</td></tr>
+<tr><td width="760"colspan="3">&nbsp;</td></tr>
+
+
+<tr valign="top"><td align="right"><strong><a name="channels">CHANNELS </a></strong></td>
+<td width="20">&nbsp;</td>
+<td align="left">
+The <em>channels</em> parameter controls how many channels of audio
+will be present in a recording.  Setting this to <strong>Mono</strong>
+will record one channel, while <strong>Stereo</strong> will provide
+two.  This parameter is ignored for all other type events.
+</td></tr>
+
+<tr><td width="760"colspan="3">&nbsp;</td></tr>
+<tr><td width="760"colspan="3">&nbsp;</td></tr>
+
+<tr valign="top"><td align="right"><strong><a name="date">DATE </a></strong></td>
+<td width="20">&nbsp;</td>
+<td align="left">
+The <em>date</em> parameter can be used to specify a particular date or set of 
+dates at which the event is to take place, in the format <strong>MM-DD-YYYY
+</strong>, where <strong>MM</strong> is the month, <strong>DD</strong> is the 
+day and <strong>YYYY</strong> is the four-digit year.
+<p>
+The most obvious use of <em>date</em> is to define a particular date for
+an event, as for example '05-04-2000'.  This would cause the event to be run
+on that date and no other.
+<p>
+While that's certainly possible, the <em>date</em> parameter is actually much 
+more powerful than that.  <em>Date</em> supports the notion of <em>wildcards
+</em>, special characters that match any value.  For example, working
+from our date example above, suppose instead we entered '05-*-2000'.  Instead
+of running on just a single day, the event would now be scheduled to run on
+every day of May 2000, as the wildcard character '*' matches every day of the
+month.  To take another example, entering '*-05-2000' would cause the event to 
+be run on the fifth day of every month of the year 2000.  Entering '05-05-*'
+would run the event on the fifth of May every year.  It's possible to use more
+than one wildcard in a single date.  For example, '*-5-*' would run an event
+on the fifth day of every month, regardless of year.
+<p>
+Putting wildcards in <em>all</em> the <em>date</em> fields (as in '*-*-*')
+invokes a special case: the system will now use the days of the week selected
+in the <em>day of the week</em> parameter to determine which days to run the
+event.  See the <a href="#dayofweek" target="docs">Day Of The Week</a> 
+section for details on how this works.    
+</td></tr>
+
+<tr><td width="760"colspan="3">&nbsp;</td></tr>
+<tr><td width="760"colspan="3">&nbsp;</td></tr>
+
+<tr valign="top"><td align="right"><strong><a name="time">TIME </a></strong></td>
+<td width="20">&nbsp;</td>
+<td align="left">
+The <em>time</em> parameter defines the start time for an event, in the format
+<strong>HH:MM:SS,</strong> where <strong>HH</strong> is the hours part 
+(in 24-hour military format), <strong>MM</strong> is the minutes and <strong>
+SS</strong> is the seconds.
+<p>
+Just as with <em>date</em>, <em>time</em> supports the use of
+wildcards.  For example, suppose you had a newscast that you needed to
+record every hour at 55:00 past the hour.  Rather than define
+twenty-four seperate events, you could simply define one by using
+'*:55:00' for the time.  The '*' matches every hour, so this event
+would be run every hour at 55:00 past, subject only to whatever other 
+limitations you may have placed on it in the <em>date</em> or <em>day
+of week</em> parameters. 
+</td></tr>
+
+<tr><td width="760"colspan="3">&nbsp;</td></tr>
+<tr><td width="760"colspan="3">&nbsp;</td></tr>
+
+<tr valign="top"><td align="right"><strong><a name="dayofweek">DAY OF THE WEEK </a></strong></td>
+<td width="20">&nbsp;</td>
+<td align="left">
+The <em>day of the week</em> parameter controls what day of the week 
+(Monday, Tuesday, etc.) an event will run, <em>if the date parameter is set
+to all wildcards ('*-*-*').</em>  Thus, checking only 'Monday' will cause the 
+event to be run on Monday of each week, regardless of the date.  More than one 
+day can be checked at a time, so (for example) checking Monday, Tuesday, 
+Wednesday, Thursday and Friday would cause the event to be run on every 
+weekday.
+<p>
+If the <em>date</em> parameter is <em>not</em> set to all wildcards, than the
+choice made here in the <em>day of the week</em> will be ignored, and the 
+<em>date</em> value used instead. 
+</td></tr>
+
+<tr><td width="760"colspan="3">&nbsp;</td></tr>
+<tr><td width="760"colspan="3">&nbsp;</td></tr>
+
+<tr valign="top"><td align="right"><strong><a name="samplerate">SAMPLE RATE </a></strong></td>
+<td width="20">&nbsp;</td>
+<td align="left">
+The <em>sample rate</em> parameter controls the sample rate (32 kHz, 44.1 kHz
+or 48 kHz) to be used for a recording.  There is seldom a reason to use 
+anything other than the default (44.1 kHz) here, which will give "CD Quality"
+audio.  This parameter is ignored for playback events. 
+</td></tr>
+
+<tr><td width="760"colspan="3">&nbsp;</td></tr>
+<tr><td width="760"colspan="3">&nbsp;</td></tr>
+
+<tr valign="top"><td align="right"><strong><a name="samplesize">SAMPLE SIZE </a></strong></td>
+<td width="20">&nbsp;</td>
+<td align="left">
+The <em>sample size</em> parameter is used to control the number of bits per
+audio sample (eight or sixteen) to be used for a recording.  For modern audio
+hardware, there is virtually never any reason to use anything other than the
+default (sixteen) here.  This parameter is ignored for playback events.
+</td></tr>
+
+<tr><td width="760"colspan="3">&nbsp;</td></tr>
+<tr><td width="760"colspan="3">&nbsp;</td></tr>
+
+<tr valign="top"><td align="right"><strong><a name="silence">AUTO TRIM </a></strong></td>
+<td width="20">&nbsp;</td>
+<td align="left">
+The auto-trim parameters <em>auto-trim holdoff</em> and <em>auto-trim
+threshold</em> are used to control how the beginning and end of a record-type 
+event will be handled.  The default case (with both parameters set to zero)
+is for the event to start and end as scheduled without reference to what the 
+audio input may be "hearing" at the time.  However, it's possible to use these 
+parameters to program the system to wait until it "hears" audio at a certain 
+level before it begins recording.  The <em>auto-trim holdoff</em> parameter
+defines how long (in seconds) the system will wait for audio at the start of a
+recording until it gives up.  The <em>auto-trim threshold</em> parameter 
+determines what minimum audio
+level needs to be detected before starting the recording (in dB below digital
+zero, meaning that a higher number will make the input <em>more</em>
+sensitive).  If the AutoTrim is enabled for the start of the recording, then
+audio at the end will be trimmed in a similar fashion --i.e. all trailing
+silence will be removed, with "silence" being defined as an audio level below
+that given in the <em>threshold</em> parameter.
+<p>
+In practice, you will likely need to experiment a bit to arrive at values that
+work well for your setup.  A good place to start is with a hold off of 5 
+seconds and a threshold value of 40.
+</td></tr>
+
+<tr><td width="760"colspan="3">&nbsp;</td></tr>
+<tr><td width="760"colspan="3">&nbsp;</td></tr>
+
+<tr valign="top"><td align="right"><strong><a name="postcommand">POST COMMAND </a></strong></td>
+<td width="20">&nbsp;</td>
+<td align="left">
+The Linux Audio Backstop will attempt to execute the shell command specified
+in the <em>post command</em> field after the associated event has
+completed.  This can be useful for automating such processes as audio 
+encoding or CD creation.  <a href="lab.html#macros" arget="docs">
+Configuration macros</a> can be used in this field.
+</td></tr>
+
+<tr><td width="760"colspan="3">&nbsp;</td></tr>
+<tr><td width="760"colspan="3">&nbsp;</td></tr>
+
+<tr valign="top"><td align="right"><strong><a
+name="deletesource">DELETE SOURCE </a></strong></td>
+<td width="20">&nbsp;</td>
+<td align="left">
+Checking this box will cause <strong>Timed Record</strong> or
+<strong>Timed Playback</strong> events to delete the
+audio file referenced in the <em>filename</em> entry after completion of
+the associated <em>post command</em>.  This entry has no effect on
+other types of events.
+</td></tr>
+
+<tr><td width="760"colspan="3">&nbsp;</td></tr>
+<tr><td width="760"colspan="3">&nbsp;</td></tr>
+
+<tr valign="top"><td align="right"><strong><a name="relaymap">RELAY MAP</a></strong></td>
+<td width="20">&nbsp;</td>
+<td align="left">
+The Linux Audio Backstop has the ability to record and then play back
+out-of-band data in the form of closures (referred to as 'relays' for 
+the rest of this discussion) in syncronization with the audio.  These
+relays are commonly used in radio network operations to signal
+affiliates that some sort of action needs to be taken, such as firing
+a legal ID or starting a local break.  The <em>Relay Map</em> section
+controls how these relays will be routed, both during recording and 
+playback, on an event-by-event basis.
+<p>
+By default, on a new event, all relays will be set to off.  For a
+record event, this means that any closures received on the
+corresponding relay inputs will be ignored, while for playback events,
+any relays previously recorded with the audio will be ignored.
+Setting a particular relay to a numeric value means that any relay
+events received on that line (relay inputs for a record event, or
+recorded relays for playback) will be routed to the selected relay.
+This combination of input and output relay mapping is designed to
+provide maximum flexibility for sites that may have need to
+record and play out programs on multiple channels.
+<p>
+An example may be helpful.  Say we wish to record a live program that
+needs to include a relay to indicate the start of a local break.  A
+momentary button has been wired to relay input '4' of the computer
+that the show's host can press to indicate this.  In order to set up a
+record event to capture this, we would set the '4:' relay map control
+to the logical relay number we want these button presses to appear as
+in our recording.  For our example, we'll set it to '0'.  Any button
+presses during the record event will now be recorded as a 'relay 0' in
+the resulting file.
+<p>
+Now, it's time to play back the recording we've just made.  For the
+purposes of our example, let's say that, due to the way the network
+uplink is configured, all local break relays need to be sent out 
+relay output '2'.  To accomplish this, we would set the '0:' control
+in the Playback Event Relay Map to '2'.
+</td></tr>
+
+<tr><td width="760"colspan="3">&nbsp;</td></tr>
+<tr><td width="760"colspan="3">&nbsp;</td></tr>
+
+<tr valign="top"><td align="right"><strong><a name="macros">
+CONFIGRUATION MACROS</a></strong></td>
+<td width="20">&nbsp;</td>
+<td align="left">
+<em>Configuration macros</em> can be used to specify parameters such
+as the date, time and filename at runtime.  The available macros are:
+
+<table border="0" cellspacing="10" cellpadding="0">
+
+<tr><td align="right"><strong>%a</strong></td>
+<td align="left">The abbreviated day of the week, e.g. mon, tue, etc.</td></tr>
+
+<tr><td align="right"><strong>%b</strong></td>
+<td align="left">The abbreviated month name, e.g. jan, feb, etc.</td></tr>
+
+<tr><td align="right"><strong>%d</strong></td>
+<td align="left">The day of the month, in the range 01 - 31.</td></tr>
+
+<tr><td align="right"><strong>%f</strong></td>
+<td align="left">The event filename.</td></tr>
+
+<tr><td align="right"><strong>%k</strong></td>
+<td align="left">The hour part of the time, in the range 00 - 23</td></tr>
+
+<tr><td align="right"><strong>%m</strong></td>
+<td align="left">The month, in the range 01 - 12.</td></tr>
+
+<tr><td align="right"><strong>%M</strong></td>
+<td align="left">The minute part of the time, in the range 00 - 59.</td></tr>
+
+<tr><td align="right"><strong>%S</strong></td>
+<td align="left">The seconds part of the time, in the range 00 - 60.</td></tr>
+
+<tr><td align="right"><strong>%w</strong></td>
+<td align="left">The numeric day of the week, in the range 0 - 6 (0 = Sunday)</td></tr>
+
+<tr><td align="right"><strong>%Y</strong></td>
+<td align="left">The four digit year.</td></tr>
+
+<tr><td align="right"><strong>%%</strong></td>
+<td align="left">A literal %.</td></tr>
+
+</table>
+
+</td></tr>
+
+<tr><td width="760"colspan="3">&nbsp;</td></tr>
+<tr><td width="760"colspan="3">&nbsp;</td></tr>
+
+
+
+</table>
+</body>
+</html>

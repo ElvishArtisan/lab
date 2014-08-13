@@ -1,0 +1,203 @@
+2002-06-20 Fred Gleason <fredg@wava.com>
+	* Initial Autotools packages creation.
+2003-02-12 Fred Gleason <fredg@salemradiolabs.com>
+	* Added the 'depcomp' script so 'configure' would build properly.
+	* Cleaned up various compiler warnings.
+	* Added a rule to 'configure.in' to check for ncurses.
+	* Released as v1.2.1.
+2003-02-25 Fred Gleason <fredg@salemradiolabs.com>
+	* Added the header files to the SOURCES rules in 'Makefile.am'.
+	* Released as v1.2.2.
+2004-02-23 Fred Gleason <fredg@salemradiolabs.com>
+	* Changed the default data directory to '/srv/www/htdocs'.
+	* Changed the default package directory to '/srv/www/cgi-bin'
+	* Incremented the version number to v1.3.0.
+	* Added a startup script for labd(8) in 'rc.labd'.
+	* Added an RPM spec file in 'lab.spec.in'.
+2004-02-24 Fred Gleason <fredg@salemradiolabs.com>
+	* Remove the 'PidFile=' and 'ScoreBoardFile=' directives from the
+	configuration file.
+	* Added 'PID_FILE' and 'SCOREBOARD_FILE' compile-time variables to
+	'labd.h'.
+	* Added the 'O_NOCTTY' flag to the TTY open() call in 'labd.c'.
+	* Released as v1.3.0.
+2004-02-25 Fred Gleason <fredg@salemradiolabs.com>
+	* Added an 'EVENT_RELAY_PULSE' event type to 'labd.c'.
+2004-02-25 Fred Gleason <fredg@salemradiolabs.com>
+	* Added a 'GpioDevice=' directive to 'lab.conf.example'.
+	* Added a 'PulseRelay()' function in 'labd.c'.
+2004-02-26 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'labd.c' that was causing a Pulse Relay event to
+	fail if deck 0 was in use.
+	* Updated the labd(8), lab.conf(5) and lab.traffic(5) manpages.
+	* Released as v1.4.0.
+2004-02-27 Fred Gleason <fredg@salemradiolabs.com>
+	* Added display of the 'Source' field to Timed Playback events in
+	'wcatch.c'.
+	* Added the ability to send switcher command strings at the start
+	of a Timed Playback event in 'labd.c'.
+	* Fixed a bug in 'labd.c' that was causing reading of the
+	'SwitchDevice=' parameter to fail.
+	* Released as v1.4.1.
+2004-02-27 Fred Gleason <fredg@salemradiolabs.com>
+	* Added a call to get realtime priority in the record and playback
+	processes.
+	* Released as v1.4.2.
+2004-02-29 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'Makefile.am' that was causing 'wcatch.cgi' to be
+	installed without the SETUID bit set.
+	* Added support for the 'Timed Switcher' event type to 'wcatch.c',
+	'labd.c' and 'traffic.c'.
+2004-02-29 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'traffic.c' where the 'SOURCE' event value would
+	become corrupted in certain circumstances.
+	* Incremented the version to '1.5.0'.
+2004-02-29 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'wcatch.cgi' that was causing incorrect values
+	for 'Filename' and 'Length' to appear in the web widget with Timed
+	Switch events.
+	* Incremented the version to '1.5.1'.
+2004-03-02 Fred Gleason <fredg@salemradiolabs.com>
+	* Split the scoreboard file into seperate files for each deck.
+2004-03-04 Fred Gleason <fredg@salemradiolabs.com>
+	* Converted 'labd.c' to use PThreads for Record and Playback
+	events.
+2004-03-05 Fred Gleason <fredg@salemradiolabs.com>
+	* Added the 'UseRealtime=' directive to 'lab.conf'.
+	* Updated 'lab.conf.5' to include the 'UseRealTime=' directive.
+	* Completed the PThreads conversion of labd(8).
+2004-03-07 Fred Gleason <fredg@salemradiolabs.com>
+	* Added a 'Relay Map' section of the traffic record web form for
+	Record and Playback events.
+	* Added a 'gpioMap' field to the 'scdTraffic' struct in 'labd.h'.
+	* Added support for the 'gpioMap' field to the traffic routines in
+	'traffic.c'.
+	* Changed the bug report address to 'fredg@blackhawke.net'.
+	* Added a 'wavTimer' structure to 'wavlib.h'
+	* Added 'WriteTimerChunk()' and 'ReadTimerChunk()' functions to
+	'wavlib.c'.
+	* Incremented the wavlib version to '2.5.0'.
+	* Implemented relay record and playback capability in 'labd.c'.
+	* Updated 'html/lab.html' to include discussion of 'Timed Switch'
+	and 'Pulse Relay' events.
+	* Added a 'Relay Map' section to 'html/lab.html'.
+	* Updated the 'labd.8', 'lab.1' and 'lab.traffic.5' manpages.
+	* Updated the 'INSTALL' file.
+2004-03-07 Fred Gleason <fredg@salemradiolabs.com>
+	* Incremented the version to '2.0.0'.
+	* Updated the 'INSTALL', 'NEWS' and 'README' files.
+	* Updated the lab.conf(5) manpage.
+	* Updated the 'lab.conf.example' file.
+2004-03-17 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'labd.c' that was causing the GPO device to be
+	set to INPUT_MODE upon reinitialization of the daemon.
+	* Incremented the version to v2.0.1.
+2004-03-30 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'labd.c' where the GPO interface was being
+	improperly initialized.
+	* Incremented the version to v2.0.2.
+2004-09-24 Fred Gleason <fredg@salemradiolabs.com>
+	* Added a 'SwitchType=' directive to lab.conf(5).
+	* Added the ability to control switchers via UDP network packets.
+	* Updated the 'lab.conf.5' man page.
+	* Updated the 'labd.8' man page.
+	* Updated the 'lab.conf-example' file.
+	* Updated the package version to 2.1.0.
+	* Updated the 'NEWS' file.
+2004-09-24 Fred Gleason <fredg@salemradiolabs.com>
+	* Replace the 'in_addr_t' and 'in_port_t' data types with
+	'uint32_t' and 'uint16_t' respectively.
+	* Added a test for 'gpio.h' in 'configure.in'.
+	* Fixed a bug in 'wcatch.c' that was causing the build to break
+	when compiled without GPIO support.
+	* Incremented the package version to 2.1.1.
+2004-09-24 Fred Gleason <fredg@salemradiolabs.com>
+	* Added the capability to use time and date macros within the
+	filename field for Record and Playback events.
+	* Updated the lab.traffic(5) manpage.
+2004-09-27 Fred Gleason <fredg@salemradiolabs.com>
+	* Added an 'sCommand' member to the 'scdTraffic' structure in
+	'labd.h'.
+	* Changed the 'CLOSE-HOUR' field in lab.traffic(5) to
+	'POST-COMMAND'.
+	* Added an 'dDeleteSource' member to the 'scdTraffic' structure in
+	'labd.h'.
+	* Changed the 'CLOSE-MINUTE' field in lab.traffic(5) to
+	'DELETE-SOURCE'.
+	* Updated 'html/lab.html' to describe the new POST COMMAND and DELETE
+	SOURCE parameters.
+2004-09-27 Fred Gleason <fredg@salemradiolabs.com>
+	* Added 'Owner=' and 'Group=' directives to the [Global] section
+	of lab.conf(5).
+	* Fixed some minor widget alignment bugs in 'wcatch.c'.
+	* Documented the 'Owner=' and 'Group=' directives in lab.conf(5).
+	* Documented the 'POST-COMMAND' and 'DELETE-SOURCE' fields tom
+	lab.traffic(5).
+	* Added a security warning to 'README' and 'INSTALL' files.
+	* Documented the configuration macro values in 'html/lab.html'.
+	* Updated the package version to 2.1.2.
+2004-09-28 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'labc.h' that was causing a buffer overflow when
+	used with long source feed names.
+	* Added %a, %b and %w configuration macros to 'common.c'.
+	* Documented %a, %b and %w configuration macros in 'html/lab.html'.
+	* Documented %a, %b and %w configuration macros in lab.traffic(5).
+	* Fixed a bug in 'traffic.c' that was causing backslash characters
+	to be removed from POST-COMMAND entries.
+2004-09-29 Fred Gleason <fredg@salemradiolabs.com>
+	* Added 'lab.spec' to the DISTCLEANFILES rule in 'Makefile.am'.
+	* Added an 'EscapeQuotes()' function to 'cgilib.c'.
+	* Fixed a bug in 'labd.c' where source WAV files were being
+	deleted before the POST-COMMAND was completed.
+	* Documented the '%%' configuration macro in 'html/lab.html'.
+2004-10-22 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'labd.c' that was causing the resolved filename
+	from a macro to be mangled under certain circumstances.
+	* Added an 'InvertGpi=' directive to lab.conf(5).
+	* Incremented the version to 2.1.3.
+2005-01-09 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'wavlib.c' that was causing record faults when
+	being used with DSP interfaces that didn't support full duplex.
+	* Incremented the version to 2.1.4.
+2005-03-31 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'traffic.c' that was causing the POST-COMMAND and
+	'SOURCE-DELETE traffic fields to be corrupt when adding a new
+	traffic record.
+	* Incremented the package version to 2.1.5.
+2005-07-11 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed bugs in 'labd.h' and 'labd.c' that was causing the build
+	to break when configured without GPIO.
+2005-11-18 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'wavlib.c' that was causing an abnormal exit when
+	processing a recording with a non-zero tail trim setting (Mantis
+	bug #98).
+	* Incremented the package version to 2.1.6.
+2006-02-08 Fred Gleason <fredg@salemradiolabs.com>
+	* Modified 'lab.spec.in' and 'make_slack.in' to use the
+	install paths provided by Autoconf.
+2007-03-05 Fred Gleason <fredg@salemradiolabs.com>
+	* Updated the e-mail address in the copyright notices.
+2007-03-05 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a typo in 'lab.h' that was causing them build to break.
+2009-09-08 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed bugs in 'wavlib.c' that broke the build under OpenSuSE
+	11.1.
+	* Updated the 'Copyright:' tag to 'License:' in 'lab.spec.in'.
+2009-09-08 Fred Gleason <fredg@salemradiolabs.com>
+	* Incremented the package version to 2.1.7.
+2009-11-13 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug that caused the labd init script to fail when built
+	using a non-default --prefix= value.
+2009-11-13 Fred Gleason <fredg@salemradiolabs.com>
+	* Incremented the package version to 2.1.8.
+2010-12-31 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a typo in 'lab.h' that broke the build under CentOS 5.5.
+2010-12-31 Fred Gleason <fredg@paravelsystems.com>
+	* Hard-coded web installation paths for the 'make rpm' target in
+	'configure.in' and 'lab.spec.in'.
+2010-12-31 Fred Gleason <fredg@paravelsystems.com>
+	* Incremented the package version to 2.1.9.
+2014-02-27 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed warning in 'conflib.c'.
+2014-02-27 Fred Gleason <fredg@paravelsystems.com>
+	* Incremented the package version to 2.1.10.

@@ -1,0 +1,189 @@
+                 History file for the Linux Audio Backstop
+
+9/24/2004 -- Release 2.1.0
+Added the ability to control outboard switcher devices by means of UDP
+packets.  See the lab.conf(5) manpage for details, particularly the
+'SwitchType=' and 'SwitchDevice=' directives.
+
+-------------------------------------------------------------------------------
+
+3/07/2004 -- Release 2.0.0
+Major feature additions, including:
+    Support for the line of GPIO cards manufactured by
+    MeasurementComputing [http://www.measurementcomputing.com/].
+
+    Timed Switch Event -- Run a switcher command without affecting any
+    active Record or Playback events.
+
+    Pulse Relay Event -- Schedule a relay closure.
+
+    Relay Record/Playback -- Record and play back relay events in
+    syncronization with audio.  See the labd(8) manpage and the 'Relay
+    Map' link on the webcatcher interface for details.
+-------------------------------------------------------------------------------
+
+2/12/2003 -- Release 1.2.0
+Converted the package to use Autoconf and Automake.  Otherwise, not
+much changed.
+-------------------------------------------------------------------------------
+
+6/19/2002 -- Release 1.1.3
+Added a new line terminator code 'CR' that places a single ASCII carriage
+return (0x0D) at the return of each switcher command.  Needed support the
+Wegener Unity4000.
+-------------------------------------------------------------------------------
+
+2/8/2002 -- Release 1.1.2
+Fixed a bug that causing the build to fail on a Slackware 8.0 system, due to
+a missing include for <time.h>.
+
+Changed the default install locations for HTML pages and CGI scripts to
+'/var/www/htdocs' and '/var/www/cgi-bin' (in accordance with the new
+layout in Slackware 8.0). 
+-------------------------------------------------------------------------------
+
+5/2/2001 -- Release 1.1.1
+Fixed a bug that was causing a '/' to be prepended to the filename in each
+traffic entry when modified using the WebCatcher when audioroot was specified 
+without a trailing '/' in lab.conf(5).
+
+Corrected some minor typos in the lab.conf(5) man page.
+
+Fixed a bug that was causing labd to go catatonic upon reception of a SIGHUP
+when running detached.
+
+Fixed a bug in WebCatcher that was causing the deck status table to 
+display incorrect feed sources and start and stop times.
+-------------------------------------------------------------------------------
+
+5/22/2000 -- Release 1.1.0
+Enhanced the AutoTrim feature so that the tail as well as the head of the
+audio records are trimmed, using the same threshold value.
+
+Updated 'lab.html'.
+-------------------------------------------------------------------------------
+
+5/16/2000 -- Release 1.0.12
+Added sort capabilities to the WebCatcher interface.  Traffic entries
+will now sorted by time, with wildcard entries being placed first.
+-------------------------------------------------------------------------------
+
+5/16/2000 -- Release 1.0.11
+Fixed a bug that was allowing new traffic records to be created with zero
+length.
+
+Fixed a bug that was causing the webcatcher to fail to propogate configuration
+values through error pages.
+
+Fixed a bug in the webcatcher that was causing all new traffic events to be
+configured to use deck zero regardless of the deck requested.
+
+Fixed a bug in labd that was causing the scoreboard data to be reset upon
+reception of a SIGHUP.
+-------------------------------------------------------------------------------
+
+5/11/2000 -- Release 1.0.10
+Corrected the CHANNELS section of the help file so that it now agrees with
+'Mono/Stereo' labeling on the Webcatcher widget.
+
+Changed the formatting of the DayOfWeek fields on the traffic records table
+so that it's possible to see what days are selected without referring to
+the column headers.
+-------------------------------------------------------------------------------
+
+5/11/2000 -- Release 1.0.9
+Cleaned up several formatting issues in the Webcatcher interface, resulting
+in a cleaner, less confusing interface.
+-------------------------------------------------------------------------------
+
+5/6/2000 -- Release 1.0.8
+Added full, context sensitive help to the traffic record page.  Clicking the
+a field name now brings up help on that field in a new browser window.
+-------------------------------------------------------------------------------
+
+5/5/2000 -- Release 1.0.7
+Removed the HELP button from the event records page in the webcatcher 
+interface, which was causing all sorts of bizarre  behavour in the Netscape
+forms interface.  I'm still not sure why.
+-------------------------------------------------------------------------------
+
+5/5/2000 -- Release 1.0.6
+The first real attempt at a release version for the WebCatcher.  Added an HTML
+doc file detailing all the field meanings, and hacked the Makefile so the 
+install rule handles the HTML/CGI stuff properly.
+-------------------------------------------------------------------------------
+
+5/5/2000 -- Release 1.0.5
+The first fully functional WebCatcher release.  Everything works!
+-------------------------------------------------------------------------------
+
+5/3/2000 -- Release 1.0.4
+Not a fully functional release -- interim only!
+
+More Webcatcher stuff.  Traffic record changing now works.  Added a refresh
+button to the base status page and removed the daemon control buttons.  Still
+needed is implementation of the ADD and DELETE traffic record functions.
+-------------------------------------------------------------------------------
+
+5/2/2000 -- Release 1.0.3
+Not a fully functional release -- interim only!
+
+Added a scoreboard file, where info on the current status of the 'labd' daemon
+is written out.  Needed for the WebCatcher interface.
+
+Began implementation of the Webcatcher interface.  Basic structure created,
+process control, record change interface.  Still needs lots more work!
+-------------------------------------------------------------------------------
+
+4/25/2000 -- Release 1.0.2
+Mostly about signals.  Major rewrite of the signal handlers in 'labd', 
+resulting in improved efficiency and fewer (hopefully no) bugs.
+
+Fixed a race in 'labd's SIGHUP handler.
+
+Fixed the bug that was causing recordings to die upon reception of a
+SIGHUP by 'labd'.
+
+Fixed the bug that was causing 'labd' to skip the next scheduled event after
+reception of a SIGHUP.
+-------------------------------------------------------------------------------
+
+4/25/2000 -- Release 1.0.1
+Added the ability, using the NAME field in the 'lab.traffic' file, to specify
+the source switcher channel on the same line as a timed record (TR) event.
+The name supplied in the NAME field is matched against a table of name/command
+pairs (defined in 'lab.conf') and the correponding switcher command sent out
+the appropriate tty port.  This, in conjunction with the change to the 
+DayOfWeek entry made in 1.0.0, should enable us to *greatly* reduce the size
+and complexity of 'lab.traffic' for most situations.
+-------------------------------------------------------------------------------
+
+4/20/2000 -- Release 1.0.0
+A major rewrite of the traffic file code, mostly modularization to easily
+allow for getting traffic data from a variety of sources in the future
+(i.e. flat file, mSQL, etc.).  Also added the WriteTraffic() call to allow
+already loaded traffic data to be written back to a flat file -- needed for
+the WebCatcher interface.
+
+Changed the meaning of the DayOfWeek entry in the traffic file.  Instead of
+a one-to-one correspondence, where 0=Sunday, 1=Monday, etc, it is now a 
+bitwise-ORed field, with the LSB representing Sunday and the MSB (2^6)
+meaning Saturday.  This now allows us to represent an entire week's recording
+schedule on just a single line of the traffic file.
+-------------------------------------------------------------------------------
+
+2/8/2000  -- Release 0.6.0
+Backported the lab components (as opposed to the labd ones) from 0.5.2 into
+the special WRFD version, which became 0.6.0.  Labd in the WRFD version has a 
+variable baud rate switcher interface that actually works with the Unity 4000!
+Hopefully, this finally gets us back to a stable, unified source path.
+-------------------------------------------------------------------------------
+2/8/2000  -- Release 0.5.2
+Backported 'labd.c' from lab-0.3.2.  Quick fix for some serious flakiness,
+needed to get WNIV and WRFD fixed!
+-------------------------------------------------------------------------------
+1/26/2000 -- Release 0.5.1
+Added the SkipWeekend function. Enabling this causes time elapsed over the
+weekend to not be counted when calculating the shelf life for audio recorded 
+on Fridays for playback on Saturday, Sunday or Monday.
+-------------------------------------------------------------------------------

@@ -1,0 +1,27 @@
+               The TODO List for The Linux Audio Backstop
+
+WebCatcher: convert the DayOfWeek labels in the traffic table to two-letter 
+abbreviations and hard-align them within the overall field so it's easy to 
+see at a glance what days are programmed.  
+(Scott Spillers, 5/8/2000) -- IMPLEMENTED 5/11/2000
+
+
+WebCatcher: The day of week labels on the change record change page sometime
+appear above the checkbox rather than alongside.  Reformat.
+(Scott Spillers, 5/8/2000) -- FIXED 5/11/2000
+
+Labd/WebCatcher: Create an asplay logging scheme.  Log data should be
+accessible in both a shell and web environment.
+(Scott Spillers, 5/8/2000)
+
+WebCatcher: The choices for the 'Channels' parameter on the record change 
+page should be MONO or STEREO rather than 1 or 2.  1 or 2 is confusing.
+(Scott Spillers, 5/8/2000) -- IMPLEMENTED 5/11/2000
+
+Labd: Implement the closure command sets.
+
+WebCatcher: Add the ability to audition tips and tails of the recorded audio
+remotely.
+(Scott Spillers, 5/8/2000)
+
+

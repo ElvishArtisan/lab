@@ -1,0 +1,214 @@
+.TH lab.traffic 5 "September 2004" Linux "Linux Audio Manual"
+.SH lab.traffic
+lab.traffic \- Scheduling file for the Linux Audio Backstop
+.SH DESCRIPTION
+.B lab.traffic
+contains entries defining the actions to be taken by 
+the netcatcher component of 
+.B The Linux Audio Backstop, 
+including what 
+action (play, record, switch or pulse relay), when and where (what audio
+file to use).  In normal use, \fBlab.traffic\fP is never directly
+edited, but rather is configured by means of the \fBWebcatcher CGI
+Interface\fP. Thus, the following information is primarily of academic
+interest.  For information on the \fBWebcatcher CGI interface\fP, see
+the \fBlabd(8)\fP manpage. 
+
+\fBLab.traffic\fP is an ASCII file with each line representing an action.
+Individual fields within each line are seperated by a comma.  Commas appearing 
+as part of the field should be escaped.  Lines beginning with the # sign are 
+treated as comments and ignored, as are blank lines.
+
+.SH MACRO EXPANSION
+Certain fields (detailed below) can use one or more of
+the following configuration macros.  These macros are expanded at
+runtime as detailed below:
+.TP
+.B %a
+The abbreviated day of the week, e.g. sun, mon, etc.
+.TP
+.B %b
+The abbreviated day of the month, e.g. jan, feb, etc.
+.TP
+.B %d
+The day of the month, in the range 01 - 31.
+.TP
+.B %f
+The current filename, relative to the \fIAudioRoot\fP directory.
+.TP
+.B %k
+The hour, in the range 00 - 23.
+.TP
+.B %m
+The month of the year, in the range 01 - 12.
+.TP
+.B %M
+The minute, in the range 00 - 59.
+.TP
+.B %S
+The second, in the range 00 - 60.
+.TP
+.B %w
+The day of the week, in the range 0 - 6 (0 = Sunday).
+.TP
+.B %Y
+The four-digit year.
+.TP
+
+
+Each record (line) consists of the following:
+
+.B MONTH
+This is a decimal value between 1 and 12, and defines the month of the 
+OPEN-TIME (see below).  It is permissible to use the '*' character as a
+wildcard.
+
+.B DAY
+This is a decimal value between 1 and 31, and defines the day of the month of
+the OPEN-TIME (see below).  It is permissible to use the '*' character as a
+wildcard.
+
+.B YEAR
+This is a decimal value between 0 and 9999, and defines the year of the 
+OPEN-TIME (see below).  It is permissible to use the '*' character as a
+wildcard.
+
+.B DAY-OF-WEEK
+This is a set of values bitwise-ORed together to represent the days of the
+week, with the least significant bit representing Sunday and the the most
+significant (2^6) Saturday.  In the event of a conflict between 
+DAY-OF-WEEK and DATE, the DATE value will be used.  It is permissible to 
+use the '*' character as a wildcard.
+
+.B OPEN-HOUR
+This is a decimal value between 0 and 23, and defines the start hour of 
+an event.  For time-driven events, it is the actual execute hour.  
+For closure or threshold events, it is the open hour of the execute window.  
+It is permissible to use the '*' character as a wildcard.
+
+.B OPEN-MINUTE
+This is a decimal value between 0 and 59, and defines the start minute of 
+an event.  For time-driven events, it is the actual execute minute.  
+For closure or threshold events, it is the open minute of the execute window.  
+It is permissible to use the '*' character as a wildcard.
+
+.B OPEN-SECOND
+This is a decimal value between 0 and 59, and defines the start second of 
+an event.  For time-driven events, it is the actual execute second.  
+For closure or threshold events, it is the open second of the execute window.  
+The use of wildcards is NOT permitted in this field.
+
+.B POST-COMMAND
+This is a string value that consists of a shell command to be executed
+after the completion of a Record or Playback event.  The command will
+be executed as the user and group specified by the \fBOwner=\fP and
+\fBGroup=\fP directives in the \fBlab.conf(5)\fP file.  This entry can
+contain \fBConfiguration Macros\fP (see above).
+
+.B DELETE-SOURCE
+This is a numeric value that, if set to '1', will cause the WAV file
+referenced in the \fBFILENAME\fP field to be deleted after the
+completion of it's associated \fBPOST-COMMAND\fP.
+
+.B RESERVED
+This is a decimal value that should always be set to '0'.
+
+.B LENGTH
+This is a decimal value between 1 and 86400, and defines the length 
+of time for recording events in seconds.  It has no meaning for playback 
+or switcher events.
+
+.B EVENT-TYPE
+This is two ASCII characters, and defines the type of event.  This is a
+mandatory entry.  The following code sequences are valid:
+
+.RS
+.TP
+.B \TR 
+TIMED RECORD - Records a piece of audio based on system time as defined
+in \fBSTART-TIME\fP, without regard to closures.  If the \fBSILENCE
+SENSE\fP field is non-zero, the time value will be taken as the start of a
+window within which audio above the \fBTHRESHOLD\fP value must be detected
+to start recording.  See \fBSILENCE SENSE\fP and \fBTHRESHOLD\fP below.
+
+.TP
+.B \TP
+TIMED PLAYBACK - Plays back a piece of audio based on system time as defined
+in \fBSTART-TIME\fP, without regard to closures.
+
+.TP
+.B \TS
+TIMED SWITCH - Sends a sequence of characters specified in \fBNAME\fP 
+to the tty device specified in \fBDEVICE\fP based on system time without 
+regard to closures.  Intended as a means to support external 
+audio switchers.  Placing a \\r into the string will cause a
+single CR (ASCII 13) to be output, while placing a
+\\n will generate a CR/LF (ASCII 13 10). 
+
+.TP
+.B \PR
+PULSE RELAY - Pulse the specified relay for 1/3 of a second.
+
+.RE
+
+.B FILENAME
+For record or playback events, this is the name of the audio file, 
+relative to the \fIAudioRoot\fP directory.  This is a mandatory entry, and
+can include one or more configuration macros.  See the \fBMacro
+Expansion\fP section above for details.
+
+.B DEVICE
+This is the number of the device to be used for the event.  If it is a
+record or playback event, this should be one of the audio decks defined in
+the config file.  For a switcher event, it should be the one of the switcher
+devices defined in the config file.  This is a mandatory entry.
+
+.B SAMPLE-RATE
+This is a decimal value, indicating the sampling rate, in samples per second,
+to be used for a record event.  This field has no meaning for playback or
+switcher events.
+
+.B SAMPLE-SIZE
+This is a decimal value, indicating the number of bits per sample to be used 
+for a record event.  Currently, only the values '8' and '16' are supported.
+This field has no meaning for playback or switcher events.
+
+.B CHANNELS
+This is a decimal value, indicating the number of channels to be used for a
+record event.  Currently, only the values '1' and '2' are supported.
+This field has no meaning for playback or switcher events.
+
+.B PIN
+This is the pin number on which the triggering closure should arrive,
+or the GPO output line number to use for pulse relay events.  This
+field has no meaning for time-driven events.
+
+.B SILENCE-SENSE
+This is a decimal value, indicating the length of time in seconds that an
+audio feed can be below the THRESHOLD value before triggering a MISSED-FEED
+alarm.  A '0' in this field disables silence-sensing.
+
+.B THRESHOLD
+The threshold value in dBd to be used to trigger a SILENCE-SENSE condition
+(see \fBTHRESHOLD\fP above).  The field has no meaning for switcher events.
+
+.B SOURCE
+An ASCII string containing a descriptive name for the switcher channel
+to be used for recording.  This string is used in conjunction with the
+name/switcher command pairs defined in the \fBlab.conf\fP file to generate
+a command to the associated switcher to select this feed source.  This
+field has no meaning to non-record events.  
+
+.B RELAY MAP
+A sequence of twenty-four comma-seperated integers, corresponding to
+the target relay for input relay events zero through twenty-three
+respectively.  A '-1' in a field indicates that the corresponding
+relay is disabled.  For a full discussion of the meaning and uses of
+relay map entires, see the \fIRelay Map\fP help link on the \fBWebcatcher
+CGI Interface\fP.
+.SH AUTHOR
+Fred Gleason <fredg@paravelsystems.com>
+.SH "SEE ALSO"
+.BR lab (1),
+.BR labd (8),
+.BR lab.conf (5)

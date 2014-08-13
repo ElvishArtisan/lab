@@ -1,0 +1,41 @@
+This is the README file for the Linux Audio Backstop.  The package is 
+supplied under the GNU Public License, and as such comes with
+ABSOLUTELY NO WARRANTY.  See the file COPYING for details.
+
+LAB is designed to be a stand-alone system for the automated,
+unattended recording and playback of audio in a professional broadcast 
+environment.  Automatic selection of source channels is supported, 
+by means of an outboard switcher or satellite receiver, as well as the
+ability to run arbitrary shell commands (such as audio encoders) as
+part of the recording process.
+
+Support for network-style closure events, or 'relays', is also available
+through the use of one or more 'Digital I/O boards', available from
+MeasurementComputing [http://www.measurementcomputing.com/].  As of
+this writing, the following boards are supported:
+
+     PCI-PDIS08 -- Eight Channel In/Out
+     PCI-PDIS16	-- Sixteen Channel In/Out
+     PCI-DIO24  -- Twenty Four Channel In or Twenty Four Channel Out
+
+Use of one of these boards requires use of the GPIO driver -- see the
+INSTALL file for download instructions.
+
+IMPORTANT SECURITY NOTE
+The default installation of the Linux Audio Backstop is not secure!
+Specifically, you need to be sure to properly define the 'Owner=' and
+'Group=' directives for your system in the '/etc/lab.conf' file,
+otherwise any user with access to the Web Catcher interface will be
+able to schedule arbitrary shell commands on the system with root
+permissions.  See the lab.conf(5) man page for details on setting
+these directives.
+
+For detailed installation instructions, please see the INSTALL file.
+Detailed configuration and user infomation can be found in the man pages,
+created as part of the standard installation.  Type 'man 1 lab' after
+installing to get started. 
+
+Good Luck!
+
+
+Fred Gleason <fredg@paravelsystems.com>

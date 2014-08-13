@@ -1,0 +1,69 @@
+These are the installation instructions for the Linux Audio Backstop.
+Please be sure to see the file README for general information before
+proceeding!
+
+IMPORTANT SECURITY NOTE
+The default installation of the Linux Audio Backstop is not secure!
+Specifically, you need to be sure to properly define the 'Owner=' and
+'Group=' directives for your system in the '/etc/lab.conf' file,
+otherwise any user with access to the Web Catcher interface will be
+able to schedule arbitrary shell commands on the system with root
+permissions.  See the lab.conf(5) man page for details on setting
+these directives.
+
+PREREQUISITES
+You will need the following installed and working on your system before
+proceeding:
+
+GPIO Driver
+If you are using one of the cards from MeasurementComputing, you
+will need to install the GPIO driver.  Available at:
+
+     ftp://ftp.salemradiolabs.com/pub/srlabs/gpio/
+
+RPMs for SuSE are also available at:
+
+     ftp://ftp.salemradiolabs.com/pub/srlabs/gpio/suse
+
+
+Apache Web Server
+Needed for the WebCatcher CGI Interface.  The installation locations for
+the CGI scripts and static HTML elements can be configured by means of
+the following arguments to './configure':
+
+--pkglib=PATH
+Where 'PATH' is the directory to put the CGI scripts in.  Defaults to
+'/srv/www/cgi-bin'
+
+--datadir=PATH
+Where 'PATH' is the directory to put the static HTML elements in.
+Defaults to '/srv/www/htdocs'
+
+It is *highly* recommended that the directory selected for the CGI
+scripts be protected by some form of password protection, as anyone
+accessing these scripts will have full control of the events schedule.
+See the Apache documentation for details on how to do this.
+
+INSTALLATION
+Once the prerequisites are set up, installation is simply a matter of 
+typing './configure', followed by 'make' and (as root) by 
+'make install' in the top level directory.  
+
+A configuration file, '/etc/lab.conf' needs to be created before
+starting the labd(8) daemon.  The file 'lab.conf.example' in the top
+of the source tree should provide some sane defaults.  All options for
+this file are documented in the lab.conf(5) manpage.  Additionally,
+the '/etc/lab.traffic' file should be created for scheduling events.
+It is highly recommended that the WebCatcher CGI Interface be used to
+program events.  On a default installation, this interface can be
+accessed via any forms-capable browser at the following URL:
+
+	 http://lab-hostname/cgi-bin/wcatch.cgi
+
+where 'lab-hostname' is the hostname or IP address of the system
+running the labd(8) daemon.
+
+Good Luck!
+
+
+Fred Gleason <fredg@paravelsystems.com>

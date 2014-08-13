@@ -1,0 +1,108 @@
+## lab.spec.in
+##
+## The header file for The Linux Audio Backstop
+##
+##   (C) Copyright 1996-2004 Fred Gleason <fredg@paravelsystems.com>
+##
+##   This program is free software; you can redistribute it and/or modify
+##   it under the terms of the GNU General Public License as
+##   published by the Free Software Foundation; either version 2 of
+##   the License, or (at your option) any later version.
+##
+##   This program is distributed in the hope that it will be useful,
+##   but WITHOUT ANY WARRANTY; without even the implied warranty of
+##   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##   GNU General Public License for more details.
+##
+##   You should have received a copy of the GNU General Public
+##   License along with this program; if not, write to the Free Software
+##   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+##
+
+Summary: The Linux Audio Backstop
+Name: lab
+Version: @VERSION@
+Release: @RPM_RELEASE@
+License: GPL
+Group: Productivity/Multimedia/Other
+Source: lab-@VERSION@.tar.gz
+Requires: @APACHE_PKG@
+BuildRoot: /var/tmp/lab-@VERSION@
+
+%description
+The Linux Audio Backstop is a system for automated scheduling of audio
+recording and playback in a broadcast envrionment.  It includes
+features for controlling external audio switcher devices by means of
+serial commands.
+
+%prep
+%setup
+./configure --prefix=@LOCAL_PREFIX@
+
+%build
+make
+
+%install
+rm -rf $RPM_BUILD_ROOT
+mkdir -p $RPM_BUILD_ROOT@LOCAL_PREFIX@/bin
+cp lab $RPM_BUILD_ROOT@LOCAL_PREFIX@/bin
+
+mkdir -p $RPM_BUILD_ROOT@LOCAL_PREFIX@/sbin
+cp labd $RPM_BUILD_ROOT@LOCAL_PREFIX@/sbin
+
+mkdir -p $RPM_BUILD_ROOT@CGIDIR@
+cp wcatch.cgi $RPM_BUILD_ROOT@CGIDIR@
+chmod 4755 $RPM_BUILD_ROOT@CGIDIR@
+
+mkdir -p $RPM_BUILD_ROOT@HTMLDIR@
+cp html/amber.png $RPM_BUILD_ROOT@HTMLDIR@
+cp html/green.png $RPM_BUILD_ROOT@HTMLDIR@
+cp html/red.png $RPM_BUILD_ROOT@HTMLDIR@
+cp html/lab.html $RPM_BUILD_ROOT@HTMLDIR@
+
+mkdir -p $RPM_BUILD_ROOT/etc/init.d
+cp lab.conf.example $RPM_BUILD_ROOT/etc/lab.conf
+cp lab.traffic.example $RPM_BUILD_ROOT/etc/lab.traffic
+cp rc.labd $RPM_BUILD_ROOT/etc/init.d/labd
+
+mkdir -p $RPM_BUILD_ROOT@LOCAL_PREFIX@/man/man1
+cp lab.1 $RPM_BUILD_ROOT@LOCAL_PREFIX@/man/man1
+mkdir -p $RPM_BUILD_ROOT@LOCAL_PREFIX@/man/man5
+cp lab.conf.5 $RPM_BUILD_ROOT@LOCAL_PREFIX@/man/man5
+cp lab.traffic.5 $RPM_BUILD_ROOT@LOCAL_PREFIX@/man/man5
+mkdir -p $RPM_BUILD_ROOT@LOCAL_PREFIX@/man/man8
+cp labd.8 $RPM_BUILD_ROOT@LOCAL_PREFIX@/man/man8
+
+mkdir -p $RPM_BUILD_ROOT/var/snd
+
+%clean
+rm -rf $RPM_BUILD_ROOT
+
+%files
+%defattr(-,root,root)
+%doc README INSTALL NEWS AUTHORS TODO ChangeLog COPYING lab.conf.example lab.traffic.example
+@LOCAL_PREFIX@/bin/lab
+@LOCAL_PREFIX@/sbin/labd
+%config /etc/lab.conf
+%config /etc/lab.traffic
+/etc/init.d/labd
+%attr(4755,root,root) @CGIDIR@/wcatch.cgi
+@HTMLDIR@/amber.png
+@HTMLDIR@/green.png
+@HTMLDIR@/red.png
+@HTMLDIR@/lab.html
+@LOCAL_PREFIX@/man/man1/lab.1.gz
+@LOCAL_PREFIX@/man/man5/lab.conf.5.gz
+@LOCAL_PREFIX@/man/man5/lab.traffic.5.gz
+@LOCAL_PREFIX@/man/man8/labd.8.gz
+%attr(755,root,root) /var/snd
+
+%changelog
+* Fri Dec 31 2010 Fred Gleason <fredg@paravelsystems.com>
+-- Updated for RedHat/CentOS.
+* Fri Nov 13 2009 Fred Gleason <fredg@paravelsystems.com>
+-- Added '/var/snd'.
+* Wed Feb 08 2006 Fred Gleason <fredg@salemradiolabs.com>
+-- Altered install paths to use $prefix value from Autoconf.
+* Mon Feb 23 2004 Fred Gleason <fredg@salemradiolabs.com>
+-- Initial RPM creation.

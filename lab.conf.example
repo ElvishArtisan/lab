@@ -1,0 +1,329 @@
+;
+; The configuration file for The Linux Audio Backstop
+;
+[Global]
+AudioRoot=/var/snd
+Palettes=2
+GpiDevice=/dev/gpio0
+GpoDevice=/dev/gpio0
+InvertGpi=No
+HelpFile=/lab.html
+UseRealtime=Yes
+
+[Deck0]
+DeckActive=1
+PlayDevice=/dev/dsp1
+RecDevice=/dev/dsp0
+
+;
+; Switcher configuration for control via a serial port
+;
+SwitchType=Serial
+SwitchDevice=/dev/ttyS0
+SwitchBaud=19200
+CmdTerm=crlf
+
+;
+; Switcher Configuration for control via UDP
+;
+; SwitchType=Udp
+; SwitchDevice=myhost.mydomain.com:5859
+
+;
+; Switcher device/string mappings.
+;
+SourceName0=AA1-S
+SourceCmd0=SETAUDIO 1 S AA1
+SourceName1=AA1-L
+SourceCmd1=SETAUDIO 1 1 AA1
+SourceName2=AA1-R
+SourceCmd2=SETAUDIO 1 2 AA1
+SourceName3=AA2-S
+SourceCmd3=SETAUDIO 1 S AA2
+SourceName4=AA2-L
+SourceCmd4=SETAUDIO 1 1 AA2
+SourceName5=AA2-R
+SourceCmd5=SETAUDIO 1 2 AA2
+SourceName6=SR1
+SourceCmd6=SETAUDIO 1 S SR1
+SourceName7=SR2
+SourceCmd7=SETAUDIO 1 S SR2
+SourceName8=SR3
+SourceCmd8=SETAUDIO 1 S SR3
+SourceName9=SR4
+SourceCmd9=SETAUDIO 1 S SR4
+SourceName10=SNN
+SourceCmd10=SETAUDIO 1 S SNN
+SourceName11=FN1-S
+SourceCmd11=SETAUDIO 1 S FN1
+SourceName12=FN1-L
+SourceCmd12=SETAUDIO 1 1 FN1
+SourceName13=FN1-R
+SourceCmd13=SETAUDIO 1 2 FN1
+SourceName14=FN2-S
+SourceCmd14=SETAUDIO 1 S FN2
+SourceName15=FN2-L
+SourceCmd15=SETAUDIO 1 1 FN2
+SourceName16=FN2-R
+SourceCmd16=SETAUDIO 1 2 FN2
+SourceName17=FN3-S
+SourceCmd17=SETAUDIO 1 S FN3
+SourceName18=FN3-L
+SourceCmd18=SETAUDIO 1 1 FN3
+SourceName19=FN3-R
+SourceCmd19=SETAUDIO 1 2 FN3
+SourceName20=MB1
+SourceCmd20=SETAUDIO 1 S MB1
+SourceName21=MB2
+SourceCmd21=SETAUDIO 1 S MB2
+SourceName22=SKY
+SourceCmd22=SETAUDIO 1 S SKY
+SourceName23=VC1
+SourceCmd23=SETAUDIO 1 S VC1
+SourceName24=VC2-S
+SourceCmd24=SETAUDIO 1 S VC2
+SourceName25=VC2-L
+SourceCmd25=SETAUDIO 1 1 VC2
+SourceName26=VC2-R
+SourceCmd26=SETAUDIO 1 2 VC2
+
+
+; [Deck1]
+; DeckActive=1
+; PlayDevice=/dev/dsp3
+; RecDevice=/dev/dsp2
+; SwitchDevice=/dev/ttyS0
+; SwitchBaud=19200
+; CmdTerm=crlf
+; SourceName0=AA1-S
+; SourceCmd0=SETAUDIO 2 S AA1
+; SourceName1=AA1-L
+; SourceCmd1=SETAUDIO 2 1 AA1
+; SourceName2=AA1-R
+; SourceCmd2=SETAUDIO 2 2 AA1
+; SourceName3=AA2-S
+; SourceCmd3=SETAUDIO 2 S AA2
+; SourceName4=AA2-L
+; SourceCmd4=SETAUDIO 2 1 AA2
+; SourceName5=AA2-R
+; SourceCmd5=SETAUDIO 2 2 AA2
+; SourceName6=SR1
+; SourceCmd6=SETAUDIO 2 S SR1
+; SourceName7=SR2
+; SourceCmd7=SETAUDIO 2 S SR2
+; SourceName8=SR3
+; SourceCmd8=SETAUDIO 2 S SR3
+; SourceName9=SR4
+; SourceCmd9=SETAUDIO 2 S SR4
+; SourceName10=SNN
+; SourceCmd10=SETAUDIO 2 S SNN
+; SourceName11=FN1-S
+; SourceCmd11=SETAUDIO 2 S FN1
+; SourceName12=FN1-L
+; SourceCmd12=SETAUDIO 2 1 FN1
+; SourceName13=FN1-R
+; SourceCmd13=SETAUDIO 2 2 FN1
+; SourceName14=FN2-S
+; SourceCmd14=SETAUDIO 2 S FN2
+; SourceName15=FN2-L
+; SourceCmd15=SETAUDIO 2 1 FN2
+; SourceName16=FN2-R
+; SourceCmd16=SETAUDIO 2 2 FN2
+; SourceName17=FN3-S
+; SourceCmd17=SETAUDIO 2 S FN3
+; SourceName18=FN3-L
+; SourceCmd18=SETAUDIO 2 1 FN3
+; SourceName19=FN3-R
+; SourceCmd19=SETAUDIO 2 2 FN3
+; SourceName20=MB1
+; SourceCmd20=SETAUDIO 2 S MB1
+; SourceName21=MB2
+; SourceCmd21=SETAUDIO 2 S MB2
+; SourceName22=SKY
+; SourceCmd22=SETAUDIO 2 S SKY
+; SourceName23=VC1
+; SourceCmd23=SETAUDIO 2 S VC1
+; SourceName24=VC2-S
+; SourceCmd24=SETAUDIO 2 S VC2
+; SourceName25=VC2-L
+; SourceCmd25=SETAUDIO 2 1 VC2
+; SourceName26=VC2-R
+; SourceCmd26=SETAUDIO 2 2 VC2
+
+
+[Palette0]
+Label1=         Test Palette
+Label2=     "The Little Mermaid"
+
+Button0Line1=Fathoms
+Button0Line2=Below
+Button0Path=mermaid01.wav
+Button0Life=30
+SkipWeekend0=0
+
+Button1Line1=Main Titles
+Button1Line2=
+Button1Path=mermaid02.wav
+Button1Life=0
+SkipWeekend1=0
+
+Button2Line1=Fanfare
+Button2Line2=
+Button2Path=mermaid03.wav
+Button2Life=0
+SkipWeekend2=0
+
+Button3Line1=Daughters
+Button3Line2=of Triton
+Button3Path=mermaid04.wav
+Button3Life=0
+SkipWeekend3=0
+
+Button4Line1=Part of
+Button4Line2=Your World
+Button4Path=mermaid05.wav
+Button4Life=0
+SkipWeekend4=0
+
+Button5Line1=Under the Sea
+Button5Line2=
+Button5Path=mermaid06.wav
+Button5Life=0
+SkipWeekend5=0
+
+Button6Line1=Part of Your
+Button6Line2=World (Rprse)
+Button6Path=mermaid07.wav
+Button6Life=0
+SkipWeekend6=0
+
+Button7Line1=Poor Souls
+Button7Line2=
+Button7Path=mermaid08.wav
+Button7Life=0
+SkipWeekend7=0
+
+Button8Line1=Les Poissons
+Button8Line2=
+Button8Path=mermaid09.wav
+Button8Life=0
+SkipWeekend8=0
+
+Button9Line1=Kiss the
+Button9Line2=Girl
+Button9Path=mermaid10.wav
+Button9Life=0
+SkipWeekend9=0
+
+Button10Line1=Fireworks
+Button10Line2=
+Button10Path=mermaid11.wav
+Button10Life=0
+SkipWeekend10=0
+
+Button11Line1=Jig
+Button11Line2=
+Button11Path=mermaid12.wav
+Button11Life=0
+SkipWeekend11=0
+
+Button12Line1=The Storm
+Button12Line2=
+Button12Path=mermaid13.wav
+Button12Life=0
+SkipWeekend12=0
+
+Button13Line1=Destruction of
+Button13Line2=the Grotto
+Button13Path=mermaid14.wav
+Button13Life=0
+SkipWeekend13=0
+
+Button14Line1=Flotsam and
+Button14Line2=Jetsam
+Button14Path=mermaid15.wav
+Button14Life=0
+SkipWeekend14=0
+
+Button15Line1=Tour of the
+Button15Line2=Kingdom
+Button15Path=mermaid16.wav
+Button15Life=0
+SkipWeekend15=0
+
+Button16Line1=Bedtime
+Button16Line2=
+Button16Path=mermaid17.wav
+Button16Life=0
+SkipWeekend16=0
+
+Button17Line1=Wedding
+Button17Line2=Announcment
+Button17Path=mermaid18.wav
+Button17Life=0
+SkipWeekend17=0
+
+Button18Line1=Eric to the
+Button18Line2=Rescue
+Button18Path=mermaid19.wav
+Button18Life=0
+SkipWeekend18=0
+
+Button19Line1=Happy Ending
+Button19Line2=
+Button19Path=mermaid20.wav
+Button19Life=0
+SkipWeekend19=0
+
+Button20Line1=Button 20
+Button20Line2=
+Button20Path=mermaid19.wav
+Button20Life=0
+SkipWeekend20=0
+
+Button21Line1=Button 21
+Button21Line2=
+Button21Path=mermaid19.wav
+Button21Life=0
+SkipWeekend21=0
+
+Button22Line1=Button 22
+Button22Line2=
+Button22Path=mermaid19.wav
+Button22Life=0
+SkipWeekend22=0
+
+[Palette1]
+Label1=        Test Palette 1
+Label2=     "More Little Mermaid"
+
+Button0Line1=Part of
+Button0Line2=Your World
+Button0Path=mermaid05.wav
+Button0Life=
+SkipWeekend0=0
+
+Button1Line1=Daughters
+Button1Line2=of Triton
+Button1Path=mermaid04.wav
+Button1Life=
+SkipWeekend1=0
+
+Button2Line1=Fanfare
+Button2Line2=
+Button2Path=mermaid03.wav
+Button2Life=
+SkipWeekend2=0
+
+Button3Line1=Main Titles
+Button3Line2=
+Button3Path=mermaid02.wav
+Button3Life=0
+SkipWeekend3=0
+
+Button4Line1=Fathoms
+Button4Line2=Below
+Button4Path=mermaid01.wav
+Button4Life=0
+SkipWeekend4=0
+

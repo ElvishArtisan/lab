@@ -1,0 +1,67 @@
+.TH labd 8 "September 2004" Linux "Linux Audio Manual"
+.SH NAME
+labd \- The Linux Audio Backstop Automatic Record/Playback Daemon
+.SH SYNOPSIS
+.B labd [-v][-d]
+.SH DESCRIPTION
+The \fBLinux Audio Backstop\fP is a system for automated recording and
+replay of audio feeds.  The system consists of the automatic record/playback
+daemon and a single-touch control panel style application for
+playback of pre-recorded audio.  The rest of this man page will
+describe the record/playback daemon and it's control component, the
+\fBWebcatcher CGI Interface\fP.  For information on the control panel 
+application, please see the \fBlab(1)\fP man page.
+
+After start up, \fBlabd\fP reads the event scheduling information from
+\fBlab.traffic(5)\fP and proceeds to execute the events as programmed
+there.  These events can include recording audio, playing back audio,
+issuing strings on various serial tty or IP UDP ports (useful for 
+controlling switcher equipment) or pulsing relay outputs.
+"Out-of-band" data in the form of relay closures can also be recorded 
+and reproduced in syncronization with the audio.  Detailed information on 
+programming these events can be found in the \fBlab.traffic(5)\fP man 
+page, as well as the online help links on the Webcatcher CGI interface.
+
+.SH OPTIONS
+.TP
+.B \-v
+Print the software version and then exit
+.TP
+.B \-d
+Enter debug mode.  \fBlabd\fP will not fork to put itself in the 
+background as it normally does, and will print status messages describing
+what it is trying to do.
+
+.SH CONFIGURATION
+Configuration is performed by means of entries in the \fBlab.conf\fP file.
+See the \fBlab.conf(5)\fP man page for details. 
+
+.SH WEBCATCHER CGI INTERFACE
+The Linux Audio Backstop comes with a GUI-based interface for
+controlling the operations of the \fBlabd(8)\fP daemon and configuring
+the \fBlab.traffic\fP scheduling file.  It can be accessed from any
+web browser at the following URL:
+
+	http://backstop.hostname/cgi-bin/wcatch.cgi
+
+Where \fIbackstop.hostname\fP is the hostname or IP address of the
+system running \fBlabd(8)\fP.  The \fBWebcatcher CGI Interface\fP
+features full context-sensitive help, and is the preferred method of
+configuring the event schedule.
+
+.SH FILES
+.B /etc/lab.conf
+.RS
+Configuration file
+.RE
+.B /etc/lab.traffic
+.RS
+Events scheduling file for the \fBlabd\fP automatic record/playback daemon
+.RE
+
+.SH AUTHOR
+Fred Gleason <fredg@paravelsystems.com>
+.SH "SEE ALSO"
+.BR lab (1),
+.BR lab.conf (5),
+.BR lab.traffic (5)

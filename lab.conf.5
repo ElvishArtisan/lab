@@ -1,0 +1,295 @@
+.TH lab.conf 5 "September 2004" Linux "Linux Audio Manual"
+.SH lab.conf
+lab.conf \- Configuration file for the Linux Audio Backstop
+.SH FILE FORMAT
+.B lab.conf
+contains the configuration information for 
+.B The Linux Audio Backstop.
+The file format consists of 
+.I sections,
+each of which contain configuration information in the form of keyword/value
+pairs.  Each section begins with with the name of the section in [] brackets,
+followed by zero or more keyword/value pairs, with the keyword and value seperated by an '=' sign.  Lines starting with ; are ignored, as are blank lines.
+
+For example:
+
+.RS
+.RE
+[Section1]
+.RS
+.RE
+Keyword1=value1
+.RS
+.RE
+Keyword2=value2
+.RS
+.RE
+Keyword3=value3
+
+.SH SECTIONS/KEYWORDS
+Following are the sections and keywords for
+.B lab.conf:
+
+
+[Global]
+.RS
+.RE
+
+AudioRoot = 
+.I <audio-dir>
+.RS
+Where
+.I <audio-dir>
+is the directory where audio data is to be stored and played from.
+.RE
+
+Owner = \fI<owner-name>\fP
+.RS
+.RE
+Group = \fI<group-name>\fP
+.RS
+Where
+\fI<owner-name>\fP and \fI<group-name>\fP are the user and group names, 
+respectively, to be used for recordings.  Any \fBPost Commands\fP 
+scheduled will also be executed under these user/group names.
+
+IMPORTANT SECURITY NOTE: The default values for these parameters is
+\fBroot:root\fP, which will result in a system in which any user with
+access to the webcatcher interface will be capable of executing
+arbitrary commands on the system with root privileges.
+.RE
+
+Palettes = 
+.I <palette-quan>
+.RS
+Where
+.I <palette-quan>
+is the number of palettes to be displayed on the \fBlab(1)\fP control panel.
+.RE
+
+GpiDevice = 
+.I <gpio-dev>
+.RS
+Where
+.I <gpio-dev>
+is the name of the device to use for relay inputs.  The default is 
+\fI/dev/gpio0\fP.  It is legal for this value to be the same as that
+provided to 'GpoDevice=' if the hardware supports it --e.g. PCI-PDIS08
+or PCI-PDIS16.
+.RE
+
+GpoDevice = 
+.I <gpio-dev>
+.RS
+Where
+.I <gpio-dev>
+is the name of the device to use for relay outputs.  The default is 
+\fI/dev/gpio0\fP.  It is legal for this value to be the same as that
+provided to 'GpiDevice=' if the hardware supports it --e.g. PCI-PDIS08
+or PCI-PDIS16.
+.RE
+
+InvertGpi = \fBYes\fP|\fBNo\fP
+.RS
+Invert the logical polarity of the GPI lines for the device specified
+by \fIGpiDevice=\fP, thus making the inputs Active Low, rather than
+Active High.
+.RE
+
+HelpFile = 
+.I <help-file>
+.RS
+Where
+.I <help-file>
+is the URL for the \fBWebcatcher CGI Interface\fP helpfile.  The
+default value is \fI/lab.html\fP.
+.RE
+
+UseRealtime = \fBYes\fP|\fBNo\fP
+.RS
+Use realtime priority in the audio delivery threads.  The default
+value is \fBYes\fP.
+.RE
+
+
+[Deck\fIN\fP]
+.RS
+Where \fIN\fP is a number between 0 and 3, corresponding to one of the four
+virtual decks.  Configuration values specified within this section apply to
+the corresponding deck.
+.RE
+
+DeckActive = \fB0\fP|\fB1\fP
+.RS
+Set the status of the deck to \fIActive\fP [1] or \fIInactive\fP [0].
+Inactive decks are disabled from operation.
+.RE
+
+PlayDevice = 
+.I <dsp-dev>
+.RS
+Where
+.I <dsp-dev>
+is the audio device to be used for playback by \fBlab(1)\fP.  NOTE: 
+this value is used only by \fBlab(1)\fP.  The \fBlabd(8)\fP daemon 
+uses the devices specified by the \fIRecDevice\fP keyword (see below) 
+for both playback and recording. 
+.RE
+
+RecDevice = 
+.I <dsp-dev>
+.RS
+Where
+.I <dsp-dev>
+is the audio device to be used by \fBlabd(8)\fP for recording and
+playback.
+.RE
+
+SwitchType = \fBSerial\fP | \fBUdp\fP
+.RS
+Sets the mechanism to be used for sending switcher commands.
+\fBSerial\fP will cause \fBlabd\fP to use a local tty device, while
+\fBUdp\fP will cause UDP packets to be used.
+.RE
+
+SwitchDevice = 
+.I <switch-dev>
+.RS
+If \fISwitchType\fP is \fBserial\fP, then \fI<switch-dev>\fP is the name of 
+the tty device to be used for control of the outboard switcher device 
+associated with the corresponding deck.  If \fISwitchType\fP is
+\fBUdp\fP, then \fI<switch-dev>\fP is the destination of the UDP
+packets, in the form \fI<host-address>\fP:\fI<port-num>\fP, where
+\fI<host-address>\fP is a valid hostname or IP address in
+dotted-quad notation, and \fI<port-num>\fP is the UDP port number.  
+Note that it is possible to use the same value (e.g. /dev/ttyS0) in 
+more than one deck, thus making it possible to accomodate switchers 
+with more than one output. 
+.RE
+
+SwitchBaud = 
+.I <baud-rate>
+.RS
+Where
+.I <baud-rate>
+is one of the following valid baud rates to be used for the corresponding
+switcher device: 50, 75, 110, 134, 150, 200, 300, 600, 1200, 2400, 
+4800, 9600, 19200, 38400, 57600, 115200, 230400.  The serial output in all
+cases is formatted as eight data bits, one stop bit and no parity.
+This parameter is ignored if \fISwitchType\fP is set to \fBUdp\fP.
+.RE
+
+SourceName\fIN\fP = 
+.I <name-string>
+.RS
+.RE
+SourceCmd\fIN\fP = 
+.I <cmd-string>
+.RS
+These keywords are used to set up mappings between plain-text names and 
+switcher commands, thus allowing feed sources to be specified with easy to 
+remember descriptive names rather than complex switcher commands.  For 
+example, consider the following:
+
+.RS
+SourceName0=SNN
+.RE
+.RS
+SourceCommand0=SETAUDIO 1 S SNN
+.RE
+
+This would cause the string 'SETAUDIO 1 S SNN' to be sent to the switcher 
+every time the 'SNN' audio source was requested.  The scope of this 
+name/command pairing is limited to the particular deck within whose
+group it is configured --i.e. different pairings can be defined for
+different decks.  
+
+The number \fIN\fP is 
+arbitrary, used merely to uniquely pair the \fISourceName\fP and 
+\fISourceCommand\fP keywords.  Up to 254 name/command pairs per deck 
+can be defined.
+.RE
+
+CmdTerm = CRLF|CR|LF|NONE
+.RS
+This keyword defines how each switcher command should be terminated.
+Specifying \fBCRLF\fP will cause a carriage return/linefeed (ASCII 13/10) 
+to be sent at the end of each command. Specifying \fBCR\fP will cause a
+single carriage return (ASCII 13) to be sent, specifiying \fBLF\fP will 
+cause a single linefeed (ASCII 10) to be sent and specifying \fBNONE\fP 
+will cause nothing to be added to the end.  The default value is \fBNONE\fP.
+This parameter is ignored if \fISwitchType\fP is set to \fBUdp\fP.
+.RE
+
+
+[Palette\fIN\fP]
+.RS
+.RE
+
+Label1 =
+.I <label-text>
+.RS
+.RE
+Label2 =
+.I <label-text>
+.RS
+Where
+.I <label-text>
+is the text to be displayed on the palette button of palette
+.I N.
+.RE
+
+Button\fIB\fPLine1 = 
+.I <button-text>
+.RS
+.RE
+Button\fIB\fPLine2 = 
+.I <button-text>
+.RS
+Where
+.I <button-text>
+is the text to be displayed on button
+.I B
+of palette
+.I N.
+.RE
+
+Button\fIB\fPPath = 
+.I <wav-file>
+.RS
+Where
+.I <wav-file>
+is the name of the wav file to be associated with button
+.I B
+of palette
+.I N.
+.RE
+
+Button\fIB\fPLife = 
+.I <seconds>
+.RS
+Where
+.I <seconds>
+is the shelf life in seconds of the audio associated with button
+.I B
+of palette
+.I N.
+.RE
+
+SkipWeekend\fIB\fP = \fI0\fP|\fI1\fP
+.RS
+A one in this field indicates that time elapsed over the weekend should not
+be counted when calculating the shelf life for audio associated with button
+\fIB\fP recorded on a Friday
+for playback on the following Saturday, Sunday or Monday.  A zero (the
+default) disables this feature.
+.RE
+
+
+
+.SH AUTHOR
+Fred Gleason <fredg@paravelsystems.com>
+.SH "SEE ALSO"
+.BR lab (1),
+.BR labd (8),
+.BR lab.traffic (5)

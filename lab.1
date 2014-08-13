@@ -1,0 +1,99 @@
+.TH lab 1 "March 2004" Linux "Linux Audio Manual"
+.SH NAME
+lab \- The Linux Audio Backstop
+.SH SYNOPSIS
+.B lab
+.SH DESCRIPTION
+The \fBLinux Audio Backstop\fP is a system for automated recording and
+replay of audio feeds.  The system consists of the automatic record/playback
+daemon, a web-based control panel for configuring the daemon and a 
+single-touch control panel style application for playback of
+pre-recorded audio.  The rest of this man page will describe the
+control panel application.  For information on the record/playback
+daemon, please see the \fBlabd(8)\fP man page.
+
+.SH THE DISPLAY
+.RS
+.RE
+The standard control panel display consists of up to twenty-three audio 
+buttons, labeled 'A' through 'W' and a palette button, labeled 'PgUp'.
+This set of controls is referred to as a 'palette'.  Multiple palettes can
+be defined, each containing buttons programmed to play different pieces of
+audio.  In each palette, each audio button can be labeled, programmed to play 
+back a given audio 'wav' file and given other properties.  To scroll through 
+the available palettes, touch the \fBPage Up\fP key. 
+
+.SH PLAYING AUDIO
+.RS
+.RE
+To play a piece of audio, 
+touch the keyboard key
+corresponding to the letter displayed on the button.  The audio will instantly
+begin to play.  Touching that letter again will \fIpause\fP (not stop!) the
+audio.  Playback can be resumed by touching the letter again.  If it is desired
+to actually \fIstop\fP the audio --i.e. pause and then reset the cut to the 
+beginning -- touch both the \fBCTRL\fP and letter keys simultaneously.
+
+While audio is playing or paused, all other keys, with one exception, are 
+disabled.  
+This is done to prevent accidental interruption of audio that is "on-air".
+The exception is the \fBF12\fP key, used to exit the program.  It is always active (see \fBEXITING\fP
+below).
+
+.SH VERSION CONTROL
+.RS
+.RE
+In addition to audio playback, the Backstop includes sophisticated 
+version control features to provide advance warning of missed or outdated 
+feeds.  The status of the audio is indicated by the color of it's
+corresponding button on the display, as follows:
+
+.RS
+\fBBLUE\fP - Audio is present and ready to be played.
+.RE
+
+.RS
+\fBWHITE\fP - Audio is currently playing or paused.
+.RE
+
+.RS
+\fBGREEN\fP - Audio is currently being recorded by the background 
+daemon.
+.RE
+
+.RS
+\fBYELLOW\fP - Audio is older than the shelf life specified for that button.
+The audio is playable, but should be regarded as dated.
+.RE
+
+.RS
+\fBRED\fP - Audio not available.  
+.RE
+
+.SH EXITING
+To exit the Backstop, simply touch the \fBF12\fP key.  You'll be prompted
+with 'Exit (y/n)?' at the bottom of the display to confirm that you want to
+exit.  Touch 'y' to go ahead and exit, or anthing else to return to the
+program.
+
+.SH CONFIGURATION
+Configuration of the palette and button properties is done in the 
+\fBlab.conf\fP configuration file.  See the \fBlab.conf(5)\fP man page for 
+details.  
+
+.SH FILES
+.B /etc/lab.conf
+.RS
+Configuration file
+.RE
+.B /etc/lab.traffic
+.RS
+Events scheduling file for the \fBlabd\fP automatic record/playback daemon
+.RE
+
+.SH AUTHOR
+Fred Gleason <fredg@paravelsystems.com>
+.SH "SEE ALSO"
+.BR labd (8),
+.BR lab.conf (5),
+.BR lab.traffic (5)
