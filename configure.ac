@@ -1,6 +1,6 @@
 dnl configure.in
 dnl 
-dnl   (C) Copyright 1996-2005 Fred Gleason <fredg@paravelsystems.com>
+dnl   (C) Copyright 1996-2015 Fred Gleason <fredg@paravelsystems.com>
 dnl
 dnl   This program is free software; you can redistribute it and/or modify
 dnl   it under the terms of the GNU General Public License as
@@ -19,9 +19,10 @@ dnl
 dnl Use autoconf to process this into a configure script
 dnl
 
-AC_INIT(lab,2.1.10,fredg@paravelsystems.com)
-AM_INIT_AUTOMAKE(lab,2.1.10)
+AC_INIT(lab,m4_esyscmd(cat PACKAGE_VERSION))
+AM_INIT_AUTOMAKE
 AC_SUBST(RPM_RELEASE,1)
+m4_ifdef([AM_SILENT_RULES],[AM_SILENT_RULES([yes])])
 
 #
 # Some Fully Resolved Install Paths
@@ -80,10 +81,11 @@ else
   AC_SUBST(VENDOR,suse)
 fi 
 
-AC_OUTPUT(./Makefile \
-          ./lab.spec \
-          ./rc.labd \
-       html/Makefile \
+AC_OUTPUT( \
+	   Makefile \
+           lab.spec \
+           rc.labd \
+           html/Makefile \
 )
 
 chmod 755 rc.labd

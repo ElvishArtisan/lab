@@ -53,13 +53,24 @@ EXTRA_DIST = $(man_MANS) autogen.sh rc.labd lab.spec.in lab.conf.example\
              lab.traffic.example get_target.sh get_distro.sh
 
 rpm:	dist
-	cp lab-$(VERSION).tar.gz $(RPM_ROOT)/SOURCES/
+	cp lab-$(VERSION).tar.gz $(HOME)/rpmbuild/SOURCES/
 	$(RPMBUILD) -ba --target $(ARCH)-$(VENDOR)-linux lab.spec
-	mv $(RPM_ROOT)/RPMS/$(ARCH)/lab-$(VERSION)-@RPM_RELEASE@.$(ARCH).rpm $(top_srcdir)/
-	mv $(RPM_ROOT)/SRPMS/lab-$(VERSION)-@RPM_RELEASE@.src.rpm $(top_srcdir)/
-	rm $(RPM_ROOT)/SOURCES/lab-$(VERSION).tar.gz
-	rm -rf $(RPM_ROOT)/BUILD/lab-$(VERSION)
+	mv $(HOME)/rpmbuild/RPMS/$(ARCH)/lab-$(VERSION)-@RPM_RELEASE@.$(ARCH).rpm $(top_srcdir)/
+	mv $(HOME)/rpmbuild/SRPMS/lab-$(VERSION)-@RPM_RELEASE@.src.rpm $(top_srcdir)/
+	rm $(HOME)/rpmbuild/SOURCES/lab-$(VERSION).tar.gz
+	rm -rf $(HOME)/rpmbuild/BUILD/lab-$(VERSION)
 
 CLEANFILES = *~
-DISTCLEANFILES = depcomp install-sh missing mkinstalldirs lab.spec rc.labd
-MAINTAINERCLEANFILES = *~ Makefile.in configure aclocal.m4 *.tar.gz
+DISTCLEANFILES = *.rpm\
+                 *.tar.gz\
+                 depcomp\
+                 install-sh\
+                 missing\
+                 mkinstalldirs\
+                 lab.spec\
+                 rc.labd
+
+MAINTAINERCLEANFILES = *~\
+                       aclocal.m4\
+                       configure\
+                       Makefile.in
