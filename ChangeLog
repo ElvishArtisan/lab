@@ -206,3 +206,5 @@
 	* Modernized invocation of AC_INIT() and AM_INIT_AUTOMAKE() in
 	'configure.ac'.
 	* Modified 'Makefile.am' to use modern RPM build tree.
+2015-11-19 Fred Gleason <fredg@paravelsystems.com>
+	* Incremented the package version to 2.1.11.
